@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchPlayers } from "../api";
+import handleDeletePlayer from "./DeletePlayer";
 import React from "react";
 const APIURL = "https://fsa-puppy-bowl.herokuapp.com/api/2301-ftb-et-web-am";
 
 export default function AllPlayers() {
+  const navigate = useNavigate();
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
@@ -15,32 +18,8 @@ export default function AllPlayers() {
     getPlayers();
   }, []);
 
-  const handleDeletePlayer = async (playerId) => {
-    console.log(playerId);
-    try {
-      const response = await fetch(`${APIURL}/players/${playerId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ id: playerId }),
-      });
-      const deletedPlayer = await response.json();
-      if (deletedPlayer.error) throw deletedPlayer.error;
-      const APIdata = await fetchPlayers();
-      setPlayers(APIdata.data.players)
-      return;
-    } catch (error) {
-      console.error(
-        `Oops, an error deleting a player #${playerId} from the roster! `,
-        error
-      );
-    }
-  };
-
   return (
-    <div>
+    <div className="player-info">
       {players.length > 0 &&
         players.map((player) => {
           return (
@@ -49,9 +28,15 @@ export default function AllPlayers() {
                 <h1>{player.name}</h1>
                 <h3>#{player.id}</h3>
               </div>
-              {/* <img src={player.imageUrl} alt="playerphoto" className="img" /> */}
+              <img src={player.imageUrl} alt="playerphoto" className="img" />
               <div className="footer">
-                <button>see details</button>
+                <button
+                  onClick={() => {
+                    navigate(`/${player.id}`);
+                  }}
+                >
+                  see details
+                </button>
                 <button onClick={() => handleDeletePlayer(player.id)}>
                   remove player
                 </button>

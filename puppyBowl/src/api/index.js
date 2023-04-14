@@ -9,3 +9,13 @@ export async function fetchPlayers() {
     console.log(error);
   }
 }
+
+export async function fetchSinglePlayer(id) {
+  try{
+    const response = await fetch(`${APIURL}/${id}`)
+    const singlePlayer = await response.json();
+    return singlePlayer;
+  } catch (error){
+    console.log(error)
+  }
+}

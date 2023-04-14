@@ -1,0 +1,52 @@
+.navbar{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
+
+label{
+    margin-left: 10px;
+}
+
+#newPlayerForm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 30px;
+}
+
+.player-info{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 20px;
+}
+
+img{
+    width: 300px;
+    padding: 20px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    margin-right:10px;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+body{
+    background-color: grey;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: black;
+}
