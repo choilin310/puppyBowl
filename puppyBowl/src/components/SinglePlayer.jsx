@@ -3,16 +3,21 @@ import { fetchSinglePlayer } from "../api";
 import { useParams } from "react-router-dom";
 
 export default function SinglePlayer() {
-  const { playerId } = useParams();
+  console.log("useParams", useParams())
+  const { id } = useParams();
   const [players, setPlayers] = useState(null);
 
   useEffect (() => {
     async function getPlayers(){
-      const playerFromApi = await fetchSinglePlayer(playerId);
-      setPlayers(playerFromApi.data.id)
+      console.log(id)
+      const playerFromApi = await fetchSinglePlayer(id);
+      console.log(playerFromApi);
+      setPlayers(playerFromApi.data.player)
     }
-    setPlayers();
+    getPlayers();
   }, [])
+
+
 
   return <div className="single-player">
     {
@@ -20,6 +25,9 @@ export default function SinglePlayer() {
         <ul>
           <li>
             Name: {players.name}
+          </li>
+          <li>
+            Breed: {players.breed}
           </li>
         </ul>
       )

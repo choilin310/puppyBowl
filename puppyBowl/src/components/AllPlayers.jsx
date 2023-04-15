@@ -9,12 +9,13 @@ export default function AllPlayers() {
   const navigate = useNavigate();
   const [players, setPlayers] = useState([]);
 
+  async function getPlayers() {
+    const playerList = await fetchPlayers();
+    setPlayers(playerList.data.players);
+    console.log(playerList);
+  }
+  
   useEffect(() => {
-    async function getPlayers() {
-      const playerList = await fetchPlayers();
-      setPlayers(playerList.data.players);
-      console.log(playerList);
-    }
     getPlayers();
   }, []);
 
@@ -37,7 +38,12 @@ export default function AllPlayers() {
                 >
                   see details
                 </button>
-                <button onClick={() => handleDeletePlayer(player.id)}>
+                <button
+                  onClick={async () => {
+                    await handleDeletePlayer(player.id);
+                    await getPlayers();
+                  }}
+                >
                   remove player
                 </button>
               </div>
